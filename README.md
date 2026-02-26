@@ -48,3 +48,16 @@ Professional MVP-ready workspace for a training centers platform.
 
 - This is a production-oriented scaffold with clean separation of concerns.
 - Next step: migrate current single-file UI into modular components under `apps/web` and connect API endpoints.
+
+## Deploy to Render
+
+1. Ensure this repo/branch is pushed to GitHub.
+2. In Render dashboard, open your project and click **New +** → **Blueprint**.
+3. Select this repository and branch that contains `render.yaml`.
+4. Render will create:
+   - `masar-api` (Node web service)
+   - `masar-web` (Next.js web service)
+   - `masar-postgres` (managed PostgreSQL)
+5. After first deploy, update env values if needed:
+   - `CORS_ORIGIN` on API to your web URL.
+   - `NEXT_PUBLIC_API_BASE_URL` on Web to your API URL + `/api/v1`.

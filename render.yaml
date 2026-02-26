@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: masar-api
+    runtime: node
+    rootDir: .
+    buildCommand: npm ci && npm run build -w @masar/api
+    startCommand: npm run start -w @masar/api
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: https://masar-web.onrender.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: masar-postgres
+          property: connectionString
+
+  - type: web
+    name: masar-web
+    runtime: node
+    rootDir: .
+    buildCommand: npm ci && npm run build -w @masar/web
+    startCommand: npm run start -w @masar/web -- -p $PORT
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NEXT_PUBLIC_API_BASE_URL
+        value: https://masar-api.onrender.com/api/v1
+
+databases:
+  - name: masar-postgres
